@@ -36,7 +36,7 @@ module OmniAuth
       # Return info gathered from the trademe API call 
      
       def raw_info
-        @raw_info ||= JSON.decode(access_token.get('https://api.tmsandbox.co.nz/v1/MyTradeMe/Summary.json').body)
+        @raw_info ||= MultiJson.decode(access_token.get('https://api.tmsandbox.co.nz/v1/MyTradeMe/Summary.json').body)
       rescue ::Errno::ETIMEDOUT
         raise ::Timeout::Error
       end
