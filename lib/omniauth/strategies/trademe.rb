@@ -15,22 +15,15 @@ module OmniAuth
       }
       
       uid { 
-        user_info['id']
+        user_info['MemberId']
       }
       
       info do 
         {
-          :nickname => user_info['username'],
-          :email => user_info['email'],
-          :name => user_info['fullname'],
-          :first_name => user_info['firstname'],
-          :last_name => user_info['lastname'],
-          :description => user_info['about'],
-          :image => user_info['userpic_url'],
-          :urls => {
-            '500px' => user_info['domain'],
-            'Website' => user_info['contacts']['website']
-          }
+          :nickname => user_info['Nickname'],
+          :email => user_info['Email'],
+          :first_name => user_info['FirstName'],
+          :last_name => user_info['LastName']
         }
       end
       
@@ -40,10 +33,10 @@ module OmniAuth
         }
       end
 
-      # Return info gathered from the flickr.people.getInfo API call 
+      # Return info gathered from the trademe API call 
      
       def raw_info
-        @raw_info ||= JSON.decode(access_token.get('/v1/users.json').body)
+        @raw_info ||= JSON.decode(access_token.get('https://api.tmsandbox.co.nz/v1/MyTradeMe/Summary.json').body)
       rescue ::Errno::ETIMEDOUT
         raise ::Timeout::Error
       end
