@@ -1,5 +1,4 @@
 require 'omniauth-oauth'
-require 'multi_json'
 
 module OmniAuth
   module Strategies
@@ -44,7 +43,7 @@ module OmniAuth
       # Return info gathered from the flickr.people.getInfo API call 
      
       def raw_info
-        @raw_info ||= MultiJson.decode(access_token.get('/v1/users.json').body)
+        @raw_info ||= JSON.decode(access_token.get('/v1/users.json').body)
       rescue ::Errno::ETIMEDOUT
         raise ::Timeout::Error
       end
