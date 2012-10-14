@@ -15,15 +15,15 @@ module OmniAuth
       }
       
       uid { 
-        user_info['MemberId']
+        raw_info['MemberId']
       }
       
       info do 
         {
-          :nickname => user_info['Nickname'],
-          :email => user_info['Email'],
-          :first_name => user_info['FirstName'],
-          :last_name => user_info['LastName']
+          :nickname => raw_info['Nickname'],
+          :email => raw_info['Email'],
+          :first_name => raw_info['FirstName'],
+          :last_name => raw_info['LastName']
         }
       end
       
@@ -41,12 +41,10 @@ module OmniAuth
         raise ::Timeout::Error
       end
 
-      # Provide the "Person" portion of the raw_info
-      
       def user_info
-        @user_info ||= raw_info.nil? ? {} : raw_info["user"]
+        raw_info
       end
-      
+
       def request_phase
         options[:authorize_params] = {:perms => options[:scope]} if options[:scope]
         super
