@@ -4,21 +4,21 @@ module OmniAuth
   module Strategies
 
     class Trademe < OmniAuth::Strategies::OAuth
-      
+
       option :name, 'trademe'
-      
+
       option :client_options, {
         :site => 'https://secure.trademe.co.nz',
         :request_token_path  => "/Oauth/RequestToken",
         :access_token_path   => "/Oauth/AccessToken",
         :authorize_path      => "/Oauth/Authorize"
       }
-      
-      uid { 
+
+      uid {
         raw_info['MemberId']
       }
-      
-      info do 
+
+      info do
         {
           :nickname => raw_info['Nickname'],
           :email => raw_info['Email'],
@@ -27,15 +27,14 @@ module OmniAuth
           :name => [raw_info['FirstName'],raw_info['LastName']].join(' ')
         }
       end
-      
+
       extra do
         {
           :raw_info => raw_info
         }
       end
 
-      # Return info gathered from the trademe API call 
-     
+      # Return info gathered from the trademe API call
       def raw_info
         @raw_info ||= MultiJson.decode(access_token.get('https://api.trademe.co.nz/v1/MyTradeMe/Summary.json').body)
       rescue ::Errno::ETIMEDOUT
