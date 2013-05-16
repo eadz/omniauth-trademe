@@ -1,2 +1,2 @@
 require "omniauth-trademe/version"
-require 'omniauth/strategies/trademe'
+require "omniauth/strategies/trademe"
