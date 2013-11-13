@@ -20,6 +20,7 @@ Once these are in, you need to add the following to your `config/initializers/om
 
     Rails.application.config.middleware.use OmniAuth::Builder do
     	provider :trademe, 'consumer_key', 'consumer_secret'
+    	provider :trademe_sandbox, 'consumer_key', 'consumer_secret' unless Rails.env.production?
     end
 
 User the name of the class as provider(trademe), however to authorize, you should use the provider name which is 'trademe'.
